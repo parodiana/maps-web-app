@@ -17,19 +17,7 @@ dotenv.config({ path: join(__dirname, '../.env.local') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security middleware
-app.use(helmet());
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.'
-});
-
-app.use('/api/', limiter);
-
-// CORS configuration
+// CORS configuration (MUST BE BEFORE HELMET!)
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()) || ['http://localhost:5173'];
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -65,6 +53,21 @@ app.use(cors({
   },
   credentials: true
 }));
+
+// Security middleware (AFTER CORS!)
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" }
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.'
+});
+
+app.use('/api/', limiter);
 
 // Body parser middleware
 app.use(express.json());
