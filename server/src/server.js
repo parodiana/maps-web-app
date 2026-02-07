@@ -30,15 +30,36 @@ const limiter = rateLimit({
 app.use('/api/', limiter);
 
 // CORS configuration
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:5173'];
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()) || ['http://localhost:5173'];
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+// TEMPORARY: Allow all origins for testing (REMOVE IN PRODUCTION!)
+const ALLOW_ALL_ORIGINS = process.env.CORS_ALLOW_ALL === 'true';
+
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
+    // TEMPORARY: Allow all origins if flag is set
+    if (ALLOW_ALL_ORIGINS) {
+      console.log(`⚠️ CORS: Allowing all origins (CORS_ALLOW_ALL=true)`);
+      return callback(null, true);
+    }
+
+    // In development, allow all origins
+    if (isDevelopment) {
+      console.log(`✅ CORS: Allowing origin in development: ${origin}`);
+      return callback(null, true);
+    }
+
+    // In production, check allowed origins
     if (allowedOrigins.indexOf(origin) !== -1) {
+      console.log(`✅ CORS: Allowed origin: ${origin}`);
       callback(null, true);
     } else {
+      console.error(`❌ CORS blocked origin: ${origin}`);
+      console.error(`   Allowed origins: ${allowedOrigins.join(', ')}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
