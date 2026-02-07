@@ -1,0 +1,53 @@
+{
+  "app": {
+    "title": "Mesafe & Fiyat Hesaplayıcı",
+    "subtitle": "Müşteri konumu ve hedef adresi girerek mesafe ve fiyat bilgisi alın"
+  },
+  "form": {
+    "origin": {
+      "label": "Müşteri Konumu",
+      "placeholder": "Örn: Atatürk Caddesi No:123, İstanbul"
+    },
+    "destination": {
+      "label": "Gidilecek Adres",
+      "placeholder": "Örn: Taksim Meydanı, İstanbul"
+    },
+    "staticPrice": {
+      "label": "Açılış Parası (Opsiyonel)",
+      "placeholder": "Örn: 50"
+    },
+    "calculate": "Hesapla",
+    "calculating": "Hesaplanıyor...",
+    "reset": "Temizle"
+  },
+  "result": {
+    "title": "Hesaplama Sonucu",
+    "route": "Rota Bilgisi",
+    "distance": "Mesafe",
+    "duration": "Tahmini Süre",
+    "pricing": "Fiyat Bilgisi",
+    "basePrice": "Açılış Fiyatı",
+    "additionalPrice": "Ek Mesafe Ücreti",
+    "totalPrice": "Toplam Fiyat",
+    "breakdown": "Fiyat Detayı",
+    "kilometers": "km",
+    "from": "Başlangıç",
+    "to": "Hedef"
+  },
+  "pricing": {
+    "rule1": "0-30 km arası: 40€ sabit",
+    "rule2": "30 km üzeri: Her km için +1€"
+  },
+  "errors": {
+    "title": "Hata",
+    "required": "Lütfen tüm alanları doldurun",
+    "apiError": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "networkError": "Bağlantı hatası. İnternet bağlantınızı kontrol edin.",
+    "invalidAddress": "Geçersiz adres. Lütfen doğru bir adres girin.",
+    "serverError": "Sunucu hatası. Lütfen daha sonra tekrar deneyin."
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "app": {
+    "title": "Distance & Price Calculator",
+    "subtitle": "Enter customer location and destination address to get distance and pricing information"
+  },
+  "form": {
+    "origin": {
+      "label": "Customer Location",
+      "placeholder": "E.g: 123 Main Street, New York"
+    },
+    "destination": {
+      "label": "Destination Address",
+      "placeholder": "E.g: Times Square, New York"
+    },
+    "staticPrice": {
+      "label": "Opening Fee (Optional)",
+      "placeholder": "E.g: 50"
+    },
+    "calculate": "Calculate",
+    "calculating": "Calculating...",
+    "reset": "Clear"
+  },
+  "result": {
+    "title": "Calculation Result",
+    "route": "Route Information",
+    "distance": "Distance",
+    "duration": "Estimated Duration",
+    "pricing": "Pricing Information",
+    "basePrice": "Base Price",
+    "additionalPrice": "Additional Distance Fee",
+    "totalPrice": "Total Price",
+    "breakdown": "Price Breakdown",
+    "kilometers": "km",
+    "from": "From",
+    "to": "To"
+  },
+  "pricing": {
+    "rule1": "0-30 km: €40 flat rate",
+    "rule2": "Over 30 km: +€1 per km"
+  },
+  "errors": {
+    "title": "Error",
+    "required": "Please fill in all fields",
+    "apiError": "An error occurred. Please try again.",
+    "networkError": "Connection error. Please check your internet connection.",
+    "invalidAddress": "Invalid address. Please enter a valid address.",
+    "serverError": "Server error. Please try again later."
+  },
+  "language": {
+    "tr": "Türkçe",
+    "en": "English"
+  }
+}
