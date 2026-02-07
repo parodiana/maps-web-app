@@ -77,9 +77,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on port ${PORT}`);
+// Start server - bind to 0.0.0.0 for Railway/Docker
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server is running on 0.0.0.0:${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`⚠️  CORS: Allowing ALL origins (temporary for testing)`);
   console.log(`🔒 Google Maps API Key: ${process.env.GOOGLE_MAPS_API_KEY ? 'Set' : 'NOT SET'}`);
