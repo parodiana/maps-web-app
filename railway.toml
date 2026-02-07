@@ -1,0 +1,21 @@
+# Railway Monorepo Configuration
+
+# Backend Service
+[[services]]
+name = "backend"
+source = "server"
+build.command = "npm install"
+start.command = "npm start"
+watch = ["server/**"]
+
+[services.env]
+NODE_ENV = "production"
+PORT = "5000"
+
+# Frontend Service
+[[services]]
+name = "frontend"
+source = "client"
+build.command = "npm install && npm run build"
+start.command = "npm run preview"
+watch = ["client/**"]
