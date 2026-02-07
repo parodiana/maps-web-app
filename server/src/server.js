@@ -18,41 +18,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS configuration (MUST BE BEFORE HELMET!)
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',').map(o => o.trim()) || ['http://localhost:5173'];
-const isDevelopment = process.env.NODE_ENV !== 'production';
+// Simple CORS config - allow all origins for testing
+const corsOptions = {
+  origin: '*', // TEMPORARY: Allow all origins for testing
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: false, // Must be false when origin is '*'
+  optionsSuccessStatus: 200
+};
 
-// TEMPORARY: Allow all origins for testing (REMOVE IN PRODUCTION!)
-const ALLOW_ALL_ORIGINS = process.env.CORS_ALLOW_ALL === 'true';
+app.use(cors(corsOptions));
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    // TEMPORARY: Allow all origins if flag is set
-    if (ALLOW_ALL_ORIGINS) {
-      console.log(`⚠️ CORS: Allowing all origins (CORS_ALLOW_ALL=true)`);
-      return callback(null, true);
-    }
-
-    // In development, allow all origins
-    if (isDevelopment) {
-      console.log(`✅ CORS: Allowing origin in development: ${origin}`);
-      return callback(null, true);
-    }
-
-    // In production, check allowed origins
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      console.log(`✅ CORS: Allowed origin: ${origin}`);
-      callback(null, true);
-    } else {
-      console.error(`❌ CORS blocked origin: ${origin}`);
-      console.error(`   Allowed origins: ${allowedOrigins.join(', ')}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-}));
+// Handle preflight OPTIONS requests explicitly
+app.options('*', cors(corsOptions));
 
 // Security middleware (AFTER CORS!)
 app.use(helmet({
@@ -103,7 +81,8 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔒 CORS enabled for: ${allowedOrigins.join(', ')}`);
+  console.log(`⚠️  CORS: Allowing ALL origins (temporary for testing)`);
+  console.log(`🔒 Google Maps API Key: ${process.env.GOOGLE_MAPS_API_KEY ? 'Set' : 'NOT SET'}`);
 });
 
 export default app;
